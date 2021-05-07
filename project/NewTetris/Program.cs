@@ -12,6 +12,7 @@ namespace NewTetris {
     /// </summary>
     [STAThread]
     static void Main() {
+      // This is a test comment to verify pushing is working
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.Run(new FrmMain());
