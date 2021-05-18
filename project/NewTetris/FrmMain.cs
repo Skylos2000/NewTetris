@@ -16,6 +16,8 @@ namespace NewTetris
     {
         public Game game;
 
+        private bool paused;
+
         private void PlayBackgroundMusic()
         {
             System.Media.SoundPlayer Player = new System.Media.SoundPlayer(NewTetris.Properties.Resources.bg_music);
@@ -32,6 +34,7 @@ namespace NewTetris
             Game.field = lblPlayingField;
             game.NextShape();
             PlayBackgroundMusic();
+            paused = false;
         }
 
         private void tmrCurrentPieceFall_Tick(object sender, EventArgs e)
@@ -48,35 +51,62 @@ namespace NewTetris
             }
         }
 
+        private void ResumeGame()
+        {
+            paused = false;
+            tmrCurrentPieceFall.Start();
+        }
+
+        private void PauseAndShowDialogBox()
+        {
+            paused = true;
+            tmrCurrentPieceFall.Stop();
+            string message = "Press OK to resume.";
+            string title = "Game Paused";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            DialogResult result = MessageBox.Show(message, title, buttons);
+            if (result == DialogResult.OK)
+            {
+                //this.Close();
+                ResumeGame();
+            }
+
+        }
+
         private void FrmMain_KeyUp(object sender, KeyEventArgs e)
         {
             System.Media.SoundPlayer leftRight = new System.Media.SoundPlayer(NewTetris.Properties.Resources.left_right);
             System.Media.SoundPlayer rotate = new System.Media.SoundPlayer(Properties.Resources.rotate);
-            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+            if (!paused && e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
                 leftRight.PlaySync();
                 Game.curShape.TryMoveLeft();
             }
-            else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            else if (!paused && e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
                 leftRight.PlaySync();
 
                 Game.curShape.TryMoveRight();
             }
-            else if (e.KeyCode == Keys.Z)
+            else if (!paused && e.KeyCode == Keys.Z)
             {
                 rotate.PlaySync();
                 Game.curShape.RotateCCW();
             }
-            else if (e.KeyCode == Keys.X)
+            else if (!paused && e.KeyCode == Keys.X)
             {
                 rotate.PlaySync();
                 Game.curShape.RotateCW();
             }
-            else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
+            else if (!paused && e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
             {
                 //rotate.PlaySync();
                 Game.curShape.TryMoveDown();
+            }
+            else if (e.KeyCode == Keys.Space)
+            {
+
+                PauseAndShowDialogBox();
             }
         }
     }

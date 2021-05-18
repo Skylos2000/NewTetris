@@ -24,13 +24,15 @@ namespace NewTetris_Lib {
     /// cleared - currently unused
     /// </summary>
     public event Action OnRowClear;
+        private int rows = 16;
+        private int columns = 10;
 
     /// <summary>
     /// Default constructor initializing the field
     /// to 22 rows and 15 columns
     /// </summary>
     private PlayingField() {
-      field = new Piece[16, 15];
+      field = new Piece[rows, columns];
     }
 
     /// <summary>
@@ -66,12 +68,21 @@ namespace NewTetris_Lib {
       field[row, col] = piece;
     }
 
-    /// <summary>
-    /// Checks each row to see if any of them are filled and
-    /// needs to be cleared, then clears those rows - currently
-    /// unused and not implemented
-    /// </summary>
-    public void CheckClearAllRows() {
-    }
+        public void ClearRow(int row)
+        {
+            for(int i = 0; i < columns; i++)
+            {
+                DeletePiece(row, i);
+            }
+        }
+
+        /// <summary>
+        /// Checks each row to see if any of them are filled and
+        /// needs to be cleared, then clears those rows - currently
+        /// unused and not implemented
+        /// </summary>
+        public void CheckClearAllRows() {
+          
+        }
   }
 }
