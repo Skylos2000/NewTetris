@@ -30,7 +30,7 @@ namespace NewTetris_Lib {
     /// to 22 rows and 15 columns
     /// </summary>
     private PlayingField() {
-      field = new Piece[22, 15];
+      field = new Piece[16, 15];
     }
 
     /// <summary>
