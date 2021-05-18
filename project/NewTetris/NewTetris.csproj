@@ -79,6 +79,8 @@
     <None Include="Resources\bg_music.wav" />
     <None Include="Resources\left_right.wav" />
     <None Include="Resources\rotate.wav" />
+    <None Include="data\block_piece_yellow.png" />
+    <None Include="data\block_piece_red.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

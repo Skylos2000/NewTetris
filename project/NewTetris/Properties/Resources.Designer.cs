@@ -54,6 +54,20 @@ namespace NewTetris.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap block_piece_red {
+            get {
+                object obj = ResourceManager.GetObject("block_piece_red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap block_piece_yellow {
+            get {
+                object obj = ResourceManager.GetObject("block_piece_yellow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.IO.UnmanagedMemoryStream bg_music {
             get {
                 return ResourceManager.GetStream("bg_music", resourceCulture);

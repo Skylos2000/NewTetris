@@ -26,7 +26,8 @@ namespace NewTetris
         public FrmMain()
         {
             InitializeComponent();
-            Game.imgPiece = Resources.block_piece;
+            Bitmap[] imgs = { Resources.block_piece,Resources.block_piece_red,Resources.block_piece_yellow};
+            Game.imgPieces = imgs;
             game = new Game();
             Game.field = lblPlayingField;
             game.NextShape();
@@ -51,12 +52,12 @@ namespace NewTetris
         {
             System.Media.SoundPlayer leftRight = new System.Media.SoundPlayer(NewTetris.Properties.Resources.left_right);
             System.Media.SoundPlayer rotate = new System.Media.SoundPlayer(Properties.Resources.rotate);
-            if (e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
                 leftRight.PlaySync();
                 Game.curShape.TryMoveLeft();
             }
-            else if (e.KeyCode == Keys.Right)
+            else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
                 leftRight.PlaySync();
 
@@ -71,6 +72,11 @@ namespace NewTetris
             {
                 rotate.PlaySync();
                 Game.curShape.RotateCW();
+            }
+            else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
+            {
+                //rotate.PlaySync();
+                Game.curShape.TryMoveDown();
             }
         }
     }
