@@ -15,8 +15,25 @@ namespace NewTetris_Lib {
     /// </summary>
     private Position pos;
 
-    private int fieldRow => pos.y / SIZE;
-    private int fieldCol => pos.x / SIZE;
+    public int fieldRow
+    {
+      get => pos.y / SIZE;
+      set
+      {
+        pos.y = value * SIZE;
+        UpdateImgPos();
+      }
+    }
+
+    public int fieldCol
+    {
+      get => pos.x / SIZE;
+      set
+      {
+        pos.x = value * SIZE;
+        UpdateImgPos();
+      }
+    }
 
     /// <summary>
     /// Control used to hold the image of the piece so GUI can display it
@@ -49,8 +66,6 @@ namespace NewTetris_Lib {
       this.pos = pos;
       UpdateImgPos();
     }
-
-    public Position GetPos() => pos;
 
     /// <summary>
     /// Allows the Picture Box control to be updated to the
@@ -98,7 +113,7 @@ namespace NewTetris_Lib {
     /// and puts a 1 in the playing field at that location, signify it is now occupied
     /// </summary>
     public void DissolveIntoField() {
-      PlayingField.GetInstance().SetPiece(fieldRow, fieldCol, this);
+      PlayingField.GetInstance().AddPiece(this);
     }
 
     /// <summary>
@@ -163,6 +178,9 @@ namespace NewTetris_Lib {
     public bool IsCollision(Position pos) {
       int r = pos.y / SIZE;
       int c = pos.x / SIZE;
+
+      if (r >= PlayingField.MaxRows || r < 0 || c >= PlayingField.MaxCols || c < 0)
+        return true;
       return !PlayingField.GetInstance().IsEmpty(r, c);
     }
   }

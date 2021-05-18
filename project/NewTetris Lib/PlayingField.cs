@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NewTetris_Lib {
@@ -15,13 +16,10 @@ namespace NewTetris_Lib {
     /// </summary>
     private static PlayingField instance = null;
 
-    private const int Rows = 22;
-    private const int Cols = 15;
+    public const int MaxRows = 22;
+    public const int MaxCols = 15;
 
-    /// <summary>
-    /// Grid holding 1 for occupied, 0 for vacant
-    /// </summary>
-    private Piece[,] field;
+    private List<Piece> pieces;
 
     /// <summary>
     /// Observer pattern event for when a row is 
@@ -35,7 +33,7 @@ namespace NewTetris_Lib {
     /// </summary>
     private PlayingField()
     {
-      field = new Piece[Rows, Cols];
+      pieces = new List<Piece>(MaxCols * MaxRows);
     }
 
     /// <summary>
@@ -52,75 +50,58 @@ namespace NewTetris_Lib {
       return instance;
     }
 
-    public bool VerifyField()
-    {
-      for (int i = 0; i < Rows; i++)
-      {
-        for (int j = 0; j < Cols; j++)
-        {
-          var piece = field[i, j];
-          if (piece == null)
-            continue;
-
-          var piecePos = piece.GetPos();
-          if (piecePos.x / Piece.SIZE != j || piecePos.y / Piece.SIZE != i)
-          {
-            return false;
-          }
-        }
-      }
-
-      return true;
-    }
-
     /// <summary>
     /// Checks if a location in the field is empty (i.e. vacant)
     /// </summary>
     /// <param name="r">Row</param>
     /// <param name="c">Column</param>
     /// <returns>True if empty, False otherwise</returns>
-    public bool IsEmpty(int r, int c) {
-      if (r < 0 || r >= field.GetLength(0) || c < 0 || c >= field.GetLength(1)) {
-        return false;
-      }
-      return field[r, c] == null;
+    public bool IsEmpty(int r, int c)
+    {
+      return !pieces.Any(piece => piece.fieldRow == r && piece.fieldCol == c);
     }
 
-    public void DeletePiece(int row, int col) {
-      field[row, col]?.Delete();
-      field[row, col] = null;
-    }
-
-    public void SetPiece(int row, int col, Piece piece) {
-      field[row, col] = piece;
-    }
-
-    private void DeleteRow(int row) {
-      for (int j = 0; j < field.GetLength(1); j++) {
-        DeletePiece(row, j);
-        for (int i = row; i > 0; i--)
-        {
-          field[i, j] = field[i - 1, j];
-          var newPos = new Position(j * Piece.SIZE, i * Piece.SIZE);
-          field[i, j]?.SetPos(newPos);
-        }
+    public void AddPiece(Piece piece)
+    {
+      if (IsEmpty(piece.fieldRow, piece.fieldCol)) {
+        pieces.Add(piece);
+      } else
+      {
+        throw new ArgumentException($"Piece at (r={piece.fieldRow},c={piece.fieldCol}) already exists.");
       }
     }
+
+    private void DeleteRow(int row)
+    {
+      var toRemove = pieces.Where(piece => piece.fieldRow == row).ToList();
+
+      foreach (var piece in toRemove)
+      {
+        pieces.Remove(piece);
+        piece.Delete();
+      }
+
+      foreach (var piece in pieces)
+      {
+        if (piece.fieldRow < row)
+          piece.fieldRow = piece.fieldRow + 1;
+      }
+    }
+
+    public bool IsRowFull(int row) => pieces.Count(piece => piece.fieldRow == row) >= MaxCols;
 
     /// <summary>
     /// Checks each row to see if any of them are filled and
     /// needs to be cleared, then clears those rows - currently
     /// unused and not implemented
     /// </summary>
-    public void CheckClearAllRows() {
-      for (int row = field.GetLength(0) - 1; row >= 0; row--) {
-        bool isRowFull = true;
-        for (int col = field.GetLength(1) - 1; col >= 0; col--) {
-          isRowFull = isRowFull && !IsEmpty(row, col);
-        }
-        if (isRowFull) {
+    public void CheckClearAllRows()
+    {
+      for (int row = 0; row < MaxRows; row++)
+      {
+        if (IsRowFull(row))
+        {
           DeleteRow(row);
-          VerifyField();
         }
       }
     }
