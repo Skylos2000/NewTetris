@@ -50,6 +50,8 @@ namespace NewTetris_Lib {
       UpdateImgPos();
     }
 
+    public Position GetPos() => pos;
+
     /// <summary>
     /// Allows the Picture Box control to be updated to the
     /// position of the piece, meaning the visual representation

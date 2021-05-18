@@ -8,14 +8,15 @@ namespace NewTetris_Lib {
   /// and cols storing 1 for occupied and 0
   /// for vacant
   /// </summary>
-  public class PlayingField {
+  public class PlayingField
+  {
     /// <summary>
     /// Singleton pattern instance
     /// </summary>
     private static PlayingField instance = null;
 
-    private const int ROWS = 22;
-    private const int COLS = 15;
+    private const int Rows = 22;
+    private const int Cols = 15;
 
     /// <summary>
     /// Grid holding 1 for occupied, 0 for vacant
@@ -32,19 +33,44 @@ namespace NewTetris_Lib {
     /// Default constructor initializing the field
     /// to 22 rows and 15 columns
     /// </summary>
-    private PlayingField() {
-      field = new Piece[ROWS, COLS];
+    private PlayingField()
+    {
+      field = new Piece[Rows, Cols];
     }
 
     /// <summary>
     /// Retrieves the Singleton pattern instance
     /// </summary>
     /// <returns>The Singleton instance</returns>
-    public static PlayingField GetInstance() {
-      if (instance == null) {
+    public static PlayingField GetInstance()
+    {
+      if (instance == null)
+      {
         instance = new PlayingField();
       }
+
       return instance;
+    }
+
+    public bool VerifyField()
+    {
+      for (int i = 0; i < Rows; i++)
+      {
+        for (int j = 0; j < Cols; j++)
+        {
+          var piece = field[i, j];
+          if (piece == null)
+            continue;
+
+          var piecePos = piece.GetPos();
+          if (piecePos.x / Piece.SIZE != j || piecePos.y / Piece.SIZE != i)
+          {
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
 
     /// <summary>
@@ -72,9 +98,11 @@ namespace NewTetris_Lib {
     private void DeleteRow(int row) {
       for (int j = 0; j < field.GetLength(1); j++) {
         DeletePiece(row, j);
-        for (int i = row; i < field.GetLength(0); i++) {
-          field[i - 1, j]?.MoveDown();
+        for (int i = row; i > 0; i--)
+        {
           field[i, j] = field[i - 1, j];
+          var newPos = new Position(j * Piece.SIZE, i * Piece.SIZE);
+          field[i, j]?.SetPos(newPos);
         }
       }
     }
@@ -92,6 +120,7 @@ namespace NewTetris_Lib {
         }
         if (isRowFull) {
           DeleteRow(row);
+          VerifyField();
         }
       }
     }

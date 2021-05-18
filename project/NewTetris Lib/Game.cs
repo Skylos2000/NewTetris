@@ -65,14 +65,13 @@ namespace NewTetris_Lib {
       curShape = ShapeFactory.MakeShape(shapeType);
     }
 
-        public static Bitmap[] imgPieces;
+    public static Bitmap[] imgPieces;
 
-        public static Bitmap RandomImagePiece()
-        {
-            int length = imgPieces.Length;
-            int v = new Random().Next(0,length);
-            return imgPieces[v];
-
-        }
+    public static Bitmap RandomImagePiece()
+    {
+      int length = imgPieces.Length;
+      int v = new Random().Next(0,length);
+      return imgPieces[v];
     }
+  }
 }
