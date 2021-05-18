@@ -14,6 +14,9 @@ namespace NewTetris_Lib {
     /// </summary>
     private static PlayingField instance = null;
 
+    private const int ROWS = 22;
+    private const int COLS = 15;
+
     /// <summary>
     /// Grid holding 1 for occupied, 0 for vacant
     /// </summary>
@@ -30,7 +33,7 @@ namespace NewTetris_Lib {
     /// to 22 rows and 15 columns
     /// </summary>
     private PlayingField() {
-      field = new Piece[22, 15];
+      field = new Piece[ROWS, COLS];
     }
 
     /// <summary>
