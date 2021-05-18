@@ -39,7 +39,6 @@ namespace NewTetris_Lib {
 
     public void Delete() {
       Game.field.Controls.Remove(pic);
-      PlayingField.GetInstance().DeletePiece(fieldRow, fieldCol);
     }
     
     /// <summary>

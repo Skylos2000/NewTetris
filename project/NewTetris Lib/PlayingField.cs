@@ -66,12 +66,31 @@ namespace NewTetris_Lib {
       field[row, col] = piece;
     }
 
+    private void DeleteRow(int row) {
+      for (int j = 0; j < field.GetLength(1); j++) {
+        DeletePiece(row, j);
+        for (int i = row; i < field.GetLength(0); i++) {
+          field[i - 1, j]?.MoveDown();
+          field[i, j] = field[i - 1, j];
+        }
+      }
+    }
+
     /// <summary>
     /// Checks each row to see if any of them are filled and
     /// needs to be cleared, then clears those rows - currently
     /// unused and not implemented
     /// </summary>
     public void CheckClearAllRows() {
+      for (int row = field.GetLength(0) - 1; row >= 0; row--) {
+        bool isRowFull = true;
+        for (int col = field.GetLength(1) - 1; col >= 0; col--) {
+          isRowFull = isRowFull && !IsEmpty(row, col);
+        }
+        if (isRowFull) {
+          DeleteRow(row);
+        }
+      }
     }
   }
 }
