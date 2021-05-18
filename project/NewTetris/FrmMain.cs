@@ -27,6 +27,7 @@ namespace NewTetris {
         if (!Game.curShape.TryMoveDown()) {
           Game.curShape.DissolveIntoField();
           Game.curShape = null;
+          PlayingField.GetInstance().CheckClearAllRows();
           game.NextShape();
         }
       }

@@ -15,6 +15,9 @@ namespace NewTetris_Lib {
     /// </summary>
     private Position pos;
 
+    private int fieldRow => pos.y / SIZE;
+    private int fieldCol => pos.x / SIZE;
+
     /// <summary>
     /// Control used to hold the image of the piece so GUI can display it
     /// </summary>
@@ -32,6 +35,11 @@ namespace NewTetris_Lib {
       pic.Size = new System.Drawing.Size(SIZE, SIZE);
       Game.field.Controls.Add(pic);
       UpdateImgPos();
+    }
+
+    public void Delete() {
+      Game.field.Controls.Remove(pic);
+      PlayingField.GetInstance().DeletePiece(fieldRow, fieldCol);
     }
     
     /// <summary>
@@ -89,9 +97,7 @@ namespace NewTetris_Lib {
     /// and puts a 1 in the playing field at that location, signify it is now occupied
     /// </summary>
     public void DissolveIntoField() {
-      int r = pos.y / SIZE;
-      int c = pos.x / SIZE;
-      PlayingField.GetInstance().field[r, c] = 1;
+      PlayingField.GetInstance().SetPiece(fieldRow, fieldCol, this);
     }
 
     /// <summary>

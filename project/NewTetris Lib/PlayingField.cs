@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace NewTetris_Lib {
   /// <summary>
@@ -16,7 +17,7 @@ namespace NewTetris_Lib {
     /// <summary>
     /// Grid holding 1 for occupied, 0 for vacant
     /// </summary>
-    public int[,] field;
+    private Piece[,] field;
 
     /// <summary>
     /// Observer pattern event for when a row is 
@@ -29,7 +30,7 @@ namespace NewTetris_Lib {
     /// to 22 rows and 15 columns
     /// </summary>
     private PlayingField() {
-      field = new int[22, 15];
+      field = new Piece[22, 15];
     }
 
     /// <summary>
@@ -53,7 +54,16 @@ namespace NewTetris_Lib {
       if (r < 0 || r >= field.GetLength(0) || c < 0 || c >= field.GetLength(1)) {
         return false;
       }
-      return field[r, c] == 0;
+      return field[r, c] == null;
+    }
+
+    public void DeletePiece(int row, int col) {
+      field[row, col]?.Delete();
+      field[row, col] = null;
+    }
+
+    public void SetPiece(int row, int col, Piece piece) {
+      field[row, col] = piece;
     }
 
     /// <summary>
@@ -62,7 +72,6 @@ namespace NewTetris_Lib {
     /// unused and not implemented
     /// </summary>
     public void CheckClearAllRows() {
-
     }
   }
 }
