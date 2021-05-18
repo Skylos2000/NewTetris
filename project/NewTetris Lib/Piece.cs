@@ -30,7 +30,7 @@ namespace NewTetris_Lib {
     public Piece(Position pos) {
       this.pos = pos;
       pic = new PictureBox();
-      pic.BackgroundImage = Game.imgPiece;
+      pic.BackgroundImage = Game.RandomImagePiece();
       pic.BackgroundImageLayout = ImageLayout.Stretch;
       pic.Size = new System.Drawing.Size(SIZE, SIZE);
       Game.field.Controls.Add(pic);
