@@ -24,8 +24,8 @@ namespace NewTetris_Lib {
     /// cleared - currently unused
     /// </summary>
     public event Action OnRowClear;
-        private int rows = 16;
-        private int columns = 10;
+        private int rows = 22;
+        private int columns = 15;
 
     /// <summary>
     /// Default constructor initializing the field
