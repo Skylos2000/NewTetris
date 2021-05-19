@@ -88,5 +88,14 @@ namespace NewTetris_Lib {
       // TODO: This could be better. It would help with speed too.
       level = score / 100;
     }
+
+    public void ResetGame()
+    {
+      PlayingField.GetInstance().DeleteAllNodes();
+      level = 0;
+      score = 0;
+      curShape?.Delete();
+      curShape = null;
+    }
   }
 }

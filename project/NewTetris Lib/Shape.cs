@@ -172,9 +172,34 @@
     /// Dissolves each piece into playing field, setting each
     /// position to 1 in the field
     /// </summary>
-    public void DissolveIntoField() {
-      foreach (Piece piece in pieces) {
-        piece.DissolveIntoField();
+    public bool DissolveIntoField()
+    {
+      bool success = true;
+      foreach (Piece piece in pieces)
+      {
+        if (!piece.DissolveIntoField())
+        {
+          success = false;
+          break;
+        }
+      }
+
+      if (!success)
+      {
+        foreach (var piece in pieces)
+        {
+          piece.Delete();
+        }
+      }
+
+      return success;
+    }
+
+    public void Delete()
+    {
+      foreach (var piece in pieces)
+      {
+        piece?.Delete();
       }
     }
   }

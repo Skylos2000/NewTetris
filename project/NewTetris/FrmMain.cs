@@ -43,18 +43,28 @@ namespace NewTetris
       {
         if (!Game.curShape.TryMoveDown())
         {
-          Game.curShape.DissolveIntoField();
+          bool isOver = !Game.curShape.DissolveIntoField();
           Game.curShape = null;
           int rowsCleared = PlayingField.GetInstance().CheckClearAllRows();
           game.AddScore(rowsCleared);
           scoreLabel.Text = game.score.ToString();
           lblLevel.Text = game.level.ToString();
+          isOver |= PlayingField.GetInstance().IsGameOver();
+
+          if (isOver)
+            isOver = PauseAndDisplayLoss();
 
           // TODO: This should probably be slowed down a lot
           tmrCurrentPieceFall.Interval = 500 / (int)Math.Pow(2, game.level);
           game.NextShape();
         }
       }
+    }
+
+    private void PauseGame()
+    {
+      paused = true;
+      tmrCurrentPieceFall.Stop();
     }
 
     private void ResumeGame()
@@ -65,8 +75,7 @@ namespace NewTetris
 
     private void PauseAndShowDialogBox()
     {
-      paused = true;
-      tmrCurrentPieceFall.Stop();
+      PauseGame();
       string message = "Press OK to resume.";
       string title = "Game Paused";
       MessageBoxButtons buttons = MessageBoxButtons.OK;
@@ -77,6 +86,24 @@ namespace NewTetris
         ResumeGame();
       }
 
+    }
+
+    private bool PauseAndDisplayLoss()
+    {
+      PauseGame();
+      var result = MessageBox.Show(
+        "You're a loser. Would you like to try again?",
+        "You lost",
+        MessageBoxButtons.YesNo
+        );
+      if (result == DialogResult.Yes) {
+        game.ResetGame();
+        ResumeGame();
+        return true;
+      } else {
+        this.Close();
+        return false;
+      }
     }
 
     private void FrmMain_KeyUp(object sender, KeyEventArgs e)

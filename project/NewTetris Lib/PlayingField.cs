@@ -22,12 +22,6 @@ namespace NewTetris_Lib {
     private List<Piece> pieces;
 
     /// <summary>
-    /// Observer pattern event for when a row is 
-    /// cleared - currently unused
-    /// </summary>
-    public event Action OnRowClear;
-
-    /// <summary>
     /// Default constructor initializing the field
     /// to 22 rows and 15 columns
     /// </summary>
@@ -104,6 +98,18 @@ namespace NewTetris_Lib {
       }
 
       return numRowsCleared;
+    }
+
+    public bool IsGameOver() => pieces.Any(piece => piece.fieldRow == 0);
+
+    public void DeleteAllNodes()
+    {
+      foreach (var piece in pieces)
+      {
+        piece.Delete();
+      }
+
+      pieces = new List<Piece>();
     }
   }
 }

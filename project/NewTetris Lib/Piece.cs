@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace NewTetris_Lib {
   /// <summary>
@@ -49,7 +50,7 @@ namespace NewTetris_Lib {
       pic = new PictureBox();
       pic.BackgroundImage = Game.RandomImagePiece();
       pic.BackgroundImageLayout = ImageLayout.Stretch;
-      pic.Size = new System.Drawing.Size(SIZE, SIZE);
+      pic.Size = new Size(SIZE, SIZE);
       Game.field.Controls.Add(pic);
       UpdateImgPos();
     }
@@ -112,8 +113,14 @@ namespace NewTetris_Lib {
     /// Puts this piece into the playing field. This takes the current position of the piece
     /// and puts a 1 in the playing field at that location, signify it is now occupied
     /// </summary>
-    public void DissolveIntoField() {
-      PlayingField.GetInstance().AddPiece(this);
+    public bool DissolveIntoField()
+    {
+      if (PlayingField.GetInstance().IsEmpty(fieldRow, fieldCol))
+      {
+        PlayingField.GetInstance().AddPiece(this);
+        return true;
+      }
+      return false;
     }
 
     /// <summary>
@@ -124,13 +131,12 @@ namespace NewTetris_Lib {
       Position posMoveTo = pos;
       posMoveTo.y += SIZE;
       if (!IsCollision(posMoveTo)) {
-        this.pos = posMoveTo;
+        pos = posMoveTo;
         UpdateImgPos();
         return true;
       }
-      else {
-        return false;
-      }
+
+      return false;
     }
 
     /// <summary>
@@ -140,7 +146,7 @@ namespace NewTetris_Lib {
       Position posMoveTo = pos;
       posMoveTo.x -= SIZE;
       if (!IsCollision(posMoveTo)) {
-        this.pos = posMoveTo;
+        pos = posMoveTo;
         UpdateImgPos();
       }
     }
@@ -152,7 +158,7 @@ namespace NewTetris_Lib {
       Position posMoveTo = pos;
       posMoveTo.x += SIZE;
       if (!IsCollision(posMoveTo)) {
-        this.pos = posMoveTo;
+        pos = posMoveTo;
         UpdateImgPos();
       }
     }
@@ -165,7 +171,7 @@ namespace NewTetris_Lib {
     /// False otherwise
     /// </returns>
     public bool IsCollision() {
-      return IsCollision(this.pos);
+      return IsCollision(pos);
     }
 
     /// <summary>
