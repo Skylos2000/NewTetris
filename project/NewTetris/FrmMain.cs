@@ -112,23 +112,23 @@ namespace NewTetris
       System.Media.SoundPlayer rotate = new System.Media.SoundPlayer(Properties.Resources.rotate);
       if (!paused && e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
       {
-        leftRight.PlaySync();
+        leftRight.Play();
         Game.curShape.TryMoveLeft();
       }
       else if (!paused && e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
       {
-        leftRight.PlaySync();
+        leftRight.Play();
 
         Game.curShape.TryMoveRight();
       }
       else if (!paused && e.KeyCode == Keys.Z)
       {
-        rotate.PlaySync();
+        rotate.Play();
         Game.curShape.RotateCCW();
       }
       else if (!paused && e.KeyCode == Keys.X)
       {
-        rotate.PlaySync();
+        rotate.Play();
         Game.curShape.RotateCW();
       }
       else if (!paused && e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
