@@ -18,10 +18,18 @@ namespace NewTetris
 
     private bool paused;
 
+    private System.Media.SoundPlayer soundLeftRight = new System.Media.SoundPlayer(Resources.left_right);
+
+    private System.Media.SoundPlayer soundRotate = new System.Media.SoundPlayer(Resources.rotate);
+
     public FrmMain()
     {
       InitializeComponent();
-      Bitmap[] imgs = { Resources.block_piece, Resources.block_piece_red, Resources.block_piece_yellow };
+
+      soundLeftRight.LoadAsync();
+      soundRotate.LoadAsync();
+
+      Bitmap[] imgs = {Resources.block_piece, Resources.block_piece_red, Resources.block_piece_yellow};
       Game.imgPieces = imgs;
       game = new Game();
       Game.field = lblPlayingField;
@@ -47,7 +55,7 @@ namespace NewTetris
             isOver = PauseAndDisplayLoss();
 
           // TODO: This should probably be slowed down a lot
-          tmrCurrentPieceFall.Interval = 500 / (int)Math.Pow(2, game.level);
+          tmrCurrentPieceFall.Interval = 500 / (int) Math.Pow(2, game.level);
           game.NextShape();
         }
       }
@@ -77,7 +85,6 @@ namespace NewTetris
         //this.Close();
         ResumeGame();
       }
-
     }
 
     private bool PauseAndDisplayLoss()
@@ -87,12 +94,15 @@ namespace NewTetris
         "You're a loser. Would you like to try again?",
         "You lost",
         MessageBoxButtons.YesNo
-        );
-      if (result == DialogResult.Yes) {
+      );
+      if (result == DialogResult.Yes)
+      {
         game.ResetGame();
         ResumeGame();
         return true;
-      } else {
+      }
+      else
+      {
         this.Close();
         return false;
       }
@@ -100,37 +110,34 @@ namespace NewTetris
 
     private void FrmMain_KeyUp(object sender, KeyEventArgs e)
     {
-      System.Media.SoundPlayer leftRight = new System.Media.SoundPlayer(NewTetris.Properties.Resources.left_right);
-      System.Media.SoundPlayer rotate = new System.Media.SoundPlayer(Properties.Resources.rotate);
       if (!paused && e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
       {
-        leftRight.Play();
+        soundLeftRight.Play();
         Game.curShape.TryMoveLeft();
       }
       else if (!paused && e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
       {
-        leftRight.Play();
+        soundLeftRight.Play();
 
         Game.curShape.TryMoveRight();
       }
       else if (!paused && e.KeyCode == Keys.Z)
       {
-        rotate.Play();
+        soundRotate.Play();
         Game.curShape.RotateCCW();
       }
       else if (!paused && e.KeyCode == Keys.X)
       {
-        rotate.Play();
+        soundRotate.Play();
         Game.curShape.RotateCW();
       }
       else if (!paused && e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
       {
-        //rotate.PlaySync();
+        //soundRotate.PlaySync();
         Game.curShape.TryMoveDown();
       }
       else if (e.KeyCode == Keys.Space)
       {
-
         PauseAndShowDialogBox();
       }
     }
