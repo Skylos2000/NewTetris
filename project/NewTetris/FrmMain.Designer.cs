@@ -30,6 +30,8 @@
       this.label3 = new System.Windows.Forms.Label();
       this.grpNextBlock = new System.Windows.Forms.GroupBox();
       this.tmrCurrentPieceFall = new System.Windows.Forms.Timer(this.components);
+      this.label1 = new System.Windows.Forms.Label();
+      this.scoreLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // lblPlayingField
@@ -89,12 +91,36 @@
       this.tmrCurrentPieceFall.Interval = 500;
       this.tmrCurrentPieceFall.Tick += new System.EventHandler(this.tmrCurrentPieceFall_Tick);
       // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+      this.label1.Location = new System.Drawing.Point(48, 190);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(80, 25);
+      this.label1.TabIndex = 14;
+      this.label1.Text = "Score:";
+      // 
+      // scoreLabel
+      // 
+      this.scoreLabel.AutoSize = true;
+      this.scoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.scoreLabel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+      this.scoreLabel.Location = new System.Drawing.Point(145, 190);
+      this.scoreLabel.Name = "scoreLabel";
+      this.scoreLabel.Size = new System.Drawing.Size(25, 25);
+      this.scoreLabel.TabIndex = 15;
+      this.scoreLabel.Text = "0";
+      // 
       // FrmMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(1183, 803);
+      this.Controls.Add(this.scoreLabel);
+      this.Controls.Add(this.label1);
       this.Controls.Add(this.grpNextBlock);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.lblLevel);
@@ -115,6 +141,8 @@
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.GroupBox grpNextBlock;
     private System.Windows.Forms.Timer tmrCurrentPieceFall;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label scoreLabel;
   }
 }
 

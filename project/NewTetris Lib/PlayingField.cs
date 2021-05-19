@@ -95,15 +95,19 @@ namespace NewTetris_Lib {
     /// needs to be cleared, then clears those rows - currently
     /// unused and not implemented
     /// </summary>
-    public void CheckClearAllRows()
+    public int CheckClearAllRows()
     {
+      int numRowsCleared = 0;
       for (int row = 0; row < MaxRows; row++)
       {
         if (IsRowFull(row))
         {
+          numRowsCleared++;
           DeleteRow(row);
         }
       }
+
+      return numRowsCleared;
     }
   }
 }

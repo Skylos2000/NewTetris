@@ -21,7 +21,7 @@ namespace NewTetris_Lib {
     /// <summary>
     /// Current player score - currently unused
     /// </summary>
-    private int score;
+    public int score;
 
     /// <summary>
     /// Random object used to randomly select next shape
@@ -72,6 +72,18 @@ namespace NewTetris_Lib {
       int length = imgPieces.Length;
       int v = new Random().Next(0,length);
       return imgPieces[v];
+    }
+
+    public void AddScore(int linesCleared)
+    {
+      if (linesCleared == 1)
+        score += 40 * (level + 1);
+      else if (linesCleared == 2)
+        score += 100 * (level + 1);
+      else if (linesCleared == 3)
+        score += 300 * (level + 1);
+      else if (linesCleared == 4)
+        score += 1200 * (level + 1);
     }
   }
 }
