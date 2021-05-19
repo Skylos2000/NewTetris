@@ -61,9 +61,9 @@
       this.lblLevel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
       this.lblLevel.Location = new System.Drawing.Point(145, 165);
       this.lblLevel.Name = "lblLevel";
-      this.lblLevel.Size = new System.Drawing.Size(42, 25);
+      this.lblLevel.Size = new System.Drawing.Size(25, 25);
       this.lblLevel.TabIndex = 10;
-      this.lblLevel.Text = "XX";
+      this.lblLevel.Text = "0";
       // 
       // label3
       // 

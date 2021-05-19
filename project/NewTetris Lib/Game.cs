@@ -10,7 +10,7 @@ namespace NewTetris_Lib {
     /// <summary>
     /// Current level the player is on - currently unused
     /// </summary>
-    private int level;
+    public int level;
 
     /// <summary>
     /// Flag to see if player is currently playing the level
@@ -19,15 +19,15 @@ namespace NewTetris_Lib {
     private bool isPlaying;
 
     /// <summary>
-    /// Current player score - currently unused
-    /// </summary>
-    public int score;
-
-    /// <summary>
     /// Random object used to randomly select next shape
     /// to appear in level
     /// </summary>
     private Random random;
+
+    /// <summary>
+    /// Current player score
+    /// </summary>
+    public int score;
 
     /// <summary>
     /// Current shape dropping onto the playing field
@@ -84,6 +84,9 @@ namespace NewTetris_Lib {
         score += 300 * (level + 1);
       else if (linesCleared == 4)
         score += 1200 * (level + 1);
+
+      // TODO: This could be better. It would help with speed too.
+      level = score / 100;
     }
   }
 }

@@ -65,9 +65,8 @@ namespace NewTetris_Lib {
     {
       if (IsEmpty(piece.fieldRow, piece.fieldCol)) {
         pieces.Add(piece);
-      } else
-      {
-        throw new ArgumentException($"Piece at (r={piece.fieldRow},c={piece.fieldCol}) already exists.");
+      } else {
+        throw new InvalidOperationException($"Piece at (r={piece.fieldRow},c={piece.fieldCol}) already exists.");
       }
     }
 
@@ -95,13 +94,10 @@ namespace NewTetris_Lib {
     /// needs to be cleared, then clears those rows - currently
     /// unused and not implemented
     /// </summary>
-    public int CheckClearAllRows()
-    {
+    public int CheckClearAllRows() {
       int numRowsCleared = 0;
-      for (int row = 0; row < MaxRows; row++)
-      {
-        if (IsRowFull(row))
-        {
+      for (int row = 0; row < MaxRows; row++) {
+        if (IsRowFull(row)) {
           numRowsCleared++;
           DeleteRow(row);
         }

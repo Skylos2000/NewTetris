@@ -48,6 +48,10 @@ namespace NewTetris
           int rowsCleared = PlayingField.GetInstance().CheckClearAllRows();
           game.AddScore(rowsCleared);
           scoreLabel.Text = game.score.ToString();
+          lblLevel.Text = game.level.ToString();
+
+          // TODO: This should probably be slowed down a lot
+          tmrCurrentPieceFall.Interval = 500 / (int)Math.Pow(2, game.level);
           game.NextShape();
         }
       }
