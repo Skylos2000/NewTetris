@@ -18,13 +18,6 @@ namespace NewTetris
 
     private bool paused;
 
-    private void PlayBackgroundMusic()
-    {
-      System.Media.SoundPlayer Player = new System.Media.SoundPlayer(NewTetris.Properties.Resources.bg_music);
-
-      //Player.SoundLocation = "bg_music.mp3";
-      Player.PlayLooping();
-    }
     public FrmMain()
     {
       InitializeComponent();
@@ -33,7 +26,6 @@ namespace NewTetris
       game = new Game();
       Game.field = lblPlayingField;
       game.NextShape();
-      PlayBackgroundMusic();
       paused = false;
     }
 
